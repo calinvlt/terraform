@@ -3,8 +3,9 @@ provider "aws" {
 }
 
 resource "aws_instance" "firstinstance" {
-    ami             = "ami-085925f297f89fce1"
-    instance_type   = "t2.micro"
+    ami                     = "ami-085925f297f89fce1"
+    instance_type           = "t2.micro"
+    vpc_security_group_ids  = [aws_security_group.instance_sg.id]
 
     user_data = <<-EOF
                 #!/bin/bash
@@ -28,3 +29,6 @@ resource "aws_security_group" "instance_sg" {
     }
 }
 
+// an expression in TF is anything that returns a value: literals and numbers for example
+// reference access the values from other parts of the code
+// resource attribute reference PROVIDER_TYPE.NAME.ATTRIBUTE: aws_security_group.instance_sg.id
